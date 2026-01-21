@@ -49,6 +49,7 @@
             text-decoration: none;
             background: #111;
             color: #fff;
+            display: inline-block;
         }
 
         button.secondary {
@@ -57,22 +58,34 @@
             border: 1px solid #ccc;
         }
 
-        pre {
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-            font-size: 0.95rem;
-            line-height: 1.4;
-            background: #f7f7f7;
-            padding: 16px;
-            border-radius: 10px;
-            border: 1px solid #e5e5e5;
-        }
-
         .hint {
             font-size: 0.9rem;
             color: #444;
             margin-top: 10px;
+        }
+
+        /* Letter styling */
+        .letter {
+            background: #f7f7f7;
+            padding: 16px;
+            border-radius: 10px;
+            border: 1px solid #e5e5e5;
+            line-height: 1.5;
+            font-size: 0.98rem;
+        }
+
+        .letter p {
+            margin: 0 0 12px 0;
+        }
+
+        .letter ol,
+        .letter ul {
+            margin: 0 0 12px 22px;
+            padding: 0;
+        }
+
+        .letter li {
+            margin: 6px 0;
         }
     </style>
 </head>
@@ -86,17 +99,27 @@
                 Use the buttons below to email Permanent Missions in Geneva.
                 The subject line will be pre-filled. Please copy and paste the letter text into the email body.
             </p>
+            <h3>
+                <strong>Instructions:</strong>
+            </h3>
+            <ol>
+                <li><strong>CLICK "COPY LETTER TEXT"</strong></li>
+                <li><strong>CLICK "OPEN EMAIL DRAFT"</strong></li>
+                <li><strong>PASTE THE LETTER TEXT INTO THE EMAIL BODY</strong></li>
+                <li><strong>SEND THE EMAIL</strong></li>
+            </ol>
 
             <div class="buttons">
+                <button class="secondary" type="button" onclick="copyLetter()">Copy letter text</button>
                 <a id="mailtoLink" class="button" href="#">Open email draft</a>
-                <button class="secondary" onclick="copyText()">Copy letter text</button>
             </div>
 
             <p class="hint">
                 Tip: On mobile, tap “Copy letter text” first, then “Open email draft”, then paste.
             </p>
 
-            <pre id="letterText"></pre>
+            <!-- CHANGED: use a DIV so formatting can render -->
+            <div id="letterContainer" class="letter" aria-label="Letter text"></div>
         </div>
     </div>
 
@@ -126,16 +149,77 @@
             "ukmission.geneva@fcdo.gov.uk"
         ].join(",");
 
-        // SUBJECT
+        // SUBJECT (mailto subject)
         const subject =
             "Emergency Special Session of the Human Rights Council – targeted extension of the Iran Fact-Finding Mission’s Mandate";
 
-        // LETTER TEXT (FULL VERSION)
-        const letter = `21 January 2026
+        // ====== WRITE YOUR LETTER ONCE, AS HTML (for display + formatted copy) ======
+        const letterHtml = `
+      <p>21 January 2026</p>
 
-Excellencies,
+      <p>Excellency,</p>
 
-We write in the context of the Emergency Special Session of the United Nations Human Rights Council on the human rights situation in the Islamic Republic of Iran, convened Friday 23 January 2026, at the request of all your governments.
+      <p>
+        We write in the context of the <strong>Emergency Special Session</strong> of the United Nations
+        <strong>Human Rights Council</strong> on the human rights situation in the Islamic Republic of Iran, convened
+        <strong>Friday 23 January 2026</strong>, at the request of your government and other States.
+      </p>
+
+      <p>
+        The Independent International <strong>Fact-Finding Mission on the Islamic Republic of Iran (FFM)</strong> was established by
+        Human Rights Council resolution S-35/1 (24 November 2022) and its mandate extended by resolutions 55/19 (4 April 2024)
+        and A/HRC/58/21 (3 April 2025), currently in force until April 2026. The Mission is mandated to investigate serious and
+        ongoing human rights violations in Iran and to collect and preserve evidence for future judicial proceedings.
+      </p>
+
+      <p>
+        Since 28 December 2025, serious violations have escalated, including the systematic use of lethal force, resulting in at least
+        2,677 confirmed deaths and over 19,000 arrests nationwide, including minors, alongside widespread torture, enforced disappearances
+        and forced confessions.
+      </p>
+
+      <p>
+        Considering these facts, we respectfully call on States to support two targeted and legally necessary adjustments to the existing mandate:
+      </p>
+
+      <ol>
+        <li>
+          <strong>Extension of the temporal scope</strong> to ensure coverage of violations committed between 28 December and 23 January,
+          without prejudice to earlier violations.
+        </li>
+        <li>
+          <strong>Targeted strengthening of the substantive scope</strong>, including explicit tasking for the Mission to:
+          <ul>
+            <li>investigate unlawful killings, mass arrests;</li>
+            <li>analyse patterns of responsibility, including command responsibility and the role of security forces, notably the Islamic Revolutionary Guard Corps (IRGC);</li>
+            <li>document internet shutdowns as an obstruction to accountability;</li>
+            <li>and reinforce evidence preservation in line with international criminal standards.</li>
+          </ul>
+        </li>
+      </ol>
+
+      <p>
+        We respectfully urge your government to support any initiative aimed at clarifying the temporal scope of the FFM’s mandate and strengthening its operational effectiveness.
+      </p>
+
+      <p>Please accept Excellency, the assurances of our highest consideration.</p>
+
+      <p>
+        Civil society actors<br>
+        Permanent Mission of X to the United Nations<br>
+        Geneva
+      </p>
+    `;
+
+        // Plain-text fallback (for email clients that don’t accept HTML paste)
+        const letterText = `
+21 January 2026
+
+Subject: Emergency Special Session of the Human Rights Council - targeted extension of the Iran Fact-Finding Mission’s Mandate
+
+Excellency,
+
+We write in the context of the Emergency Special Session of the United Nations Human Rights Council on the human rights situation in the Islamic Republic of Iran, convened Friday 23 January 2026, at the request of your government and other States.
 
 The Independent International Fact-Finding Mission on the Islamic Republic of Iran (FFM) was established by Human Rights Council resolution S-35/1 (24 November 2022) and its mandate extended by resolutions 55/19 (4 April 2024) and A/HRC/58/21 (3 April 2025), currently in force until April 2026. The Mission is mandated to investigate serious and ongoing human rights violations in Iran and to collect and preserve evidence for future judicial proceedings.
 
@@ -146,29 +230,42 @@ Considering these facts, we respectfully call on States to support two targeted 
 1. Extension of the temporal scope to ensure coverage of violations committed between 28 December and 23 January, without prejudice to earlier violations.
 
 2. Targeted strengthening of the substantive scope, including explicit tasking for the Mission to:
-— investigate unlawful killings and mass arrests;
-— analyse patterns of responsibility, including command responsibility and the role of security forces, notably the Islamic Revolutionary Guard Corps (IRGC);
-— document internet shutdowns as an obstruction to accountability;
-— and reinforce evidence preservation in line with international criminal standards.
+- investigate unlawful killings, mass arrests;
+- analyse patterns of responsibility, including command responsibility and the role of security forces, notably the Islamic Revolutionary Guard Corps (IRGC);
+- document internet shutdowns as an obstruction to accountability;
+- and reinforce evidence preservation in line with international criminal standards.
 
 We respectfully urge your government to support any initiative aimed at clarifying the temporal scope of the FFM’s mandate and strengthening its operational effectiveness.
 
-Please accept, Excellencies, the assurances of our highest consideration.
+Please accept Excellency, the assurances of our highest consideration.
 
-Civil society actors`;
+Civil society actors
+Permanent Mission of X to the United Nations
+Geneva
+`.trim();
 
-        // Inject text into page
-        document.getElementById("letterText").textContent = letter;
+        // Render letter
+        document.getElementById("letterContainer").innerHTML = letterHtml;
 
         // Build mailto link (NO BODY)
         const mailto = `mailto:${recipients}?subject=${encodeURIComponent(subject)}`;
         document.getElementById("mailtoLink").href = mailto;
 
-        // Copy to clipboard
-        function copyText() {
-            navigator.clipboard.writeText(letter).then(() => {
-                alert("Letter text copied to clipboard");
-            });
+        // Copy to clipboard WITH FORMATTING
+        async function copyLetter() {
+            try {
+                // Prefer HTML + plain text together
+                const item = new ClipboardItem({
+                    "text/html": new Blob([letterHtml], { type: "text/html" }),
+                    "text/plain": new Blob([letterText], { type: "text/plain" })
+                });
+                await navigator.clipboard.write([item]);
+                alert("Letter copied (formatting preserved). Paste into your email.");
+            } catch (err) {
+                // Fallback: plain text only
+                await navigator.clipboard.writeText(letterText);
+                alert("Letter copied as plain text (your browser blocked formatted copy).");
+            }
         }
     </script>
 </body>
