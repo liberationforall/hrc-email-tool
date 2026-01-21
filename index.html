@@ -32,6 +32,16 @@
             margin-top: 0;
         }
 
+        h2 {
+            font-size: 1.2rem;
+            margin-top: 0;
+        }
+
+        h3 {
+            font-size: 1rem;
+            margin-top: 0;
+        }
+
         .buttons {
             display: flex;
             gap: 12px;
@@ -173,7 +183,7 @@
       </p>
 
       <p>
-        Since 28 December 2025, serious violations have escalated, including the systematic use of lethal force, resulting in at least
+        Since <strong>28 December 2025</strong>, serious violations have escalated, including the systematic use of lethal force, resulting in at least
         2,677 confirmed deaths and over 19,000 arrests nationwide, including minors, alongside widespread torture, enforced disappearances
         and forced confessions.
       </p>
@@ -184,7 +194,7 @@
 
       <ol>
         <li>
-          <strong>Extension of the temporal scope</strong> to ensure coverage of violations committed between 28 December and 23 January,
+          <strong>Extension of the temporal scope</strong> to ensure coverage of violations committed between <strong>28 December</strong> and <strong>23 January</strong>,
           without prejudice to earlier violations.
         </li>
         <li>
@@ -206,8 +216,7 @@
 
       <p>
         Civil society actors<br>
-        Permanent Mission of X to the United Nations<br>
-        Geneva
+        <strong>Permanent Missions of Albania, Bulgaria, Chile, Colombia, Cyprus, Czechia, the Dominican Republic, Ecuador, Estonia, France, Iceland, Italy, Japan, Mauritius, the Netherlands, North Macedonia, the Republic of Korea, Slovenia, Spain, Switzerland, and the United Kingdom of Great Britain and Northern Ireland to the United Nations in Geneva</strong>
       </p>
     `;
 
@@ -240,8 +249,7 @@ We respectfully urge your government to support any initiative aimed at clarifyi
 Please accept Excellency, the assurances of our highest consideration.
 
 Civil society actors
-Permanent Mission of X to the United Nations
-Geneva
+Permanent Mission of Permanent Missions of Albania, Bulgaria, Chile, Colombia, Cyprus, Czechia, the Dominican Republic, Ecuador, Estonia, France, Iceland, Italy, Japan, Mauritius, the Netherlands, North Macedonia, the Republic of Korea, Slovenia, Spain, Switzerland, and the United Kingdom of Great Britain and Northern Ireland to the United Nations in Geneva
 `.trim();
 
         // Render letter
@@ -260,7 +268,7 @@ Geneva
                     "text/plain": new Blob([letterText], { type: "text/plain" })
                 });
                 await navigator.clipboard.write([item]);
-                alert("Letter copied (formatting preserved). Paste into your email.");
+                alert("Letter copied. Paste into your email.");
             } catch (err) {
                 // Fallback: plain text only
                 await navigator.clipboard.writeText(letterText);
