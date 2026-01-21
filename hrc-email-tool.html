@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Email tool – Emergency HRC Session</title>
+
+    <style>
+        body {
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            background: #fafafa;
+            color: #111;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 1.4rem;
+            margin-top: 0;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 16px 0;
+        }
+
+        button,
+        a.button {
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            background: #111;
+            color: #fff;
+        }
+
+        button.secondary {
+            background: #fff;
+            color: #111;
+            border: 1px solid #ccc;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            background: #f7f7f7;
+            padding: 16px;
+            border-radius: 10px;
+            border: 1px solid #e5e5e5;
+        }
+
+        .hint {
+            font-size: 0.9rem;
+            color: #444;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>Emergency Special Session of the Human Rights Council</h1>
+
+            <p>
+                Use the buttons below to email Permanent Missions in Geneva.
+                The subject line will be pre-filled. Please copy and paste the letter text into the email body.
+            </p>
+
+            <div class="buttons">
+                <a id="mailtoLink" class="button" href="#">Open email draft</a>
+                <button class="secondary" onclick="copyText()">Copy letter text</button>
+            </div>
+
+            <p class="hint">
+                Tip: On mobile, tap “Copy letter text” first, then “Open email draft”, then paste.
+            </p>
+
+            <pre id="letterText"></pre>
+        </div>
+    </div>
+
+    <script>
+        // RECIPIENTS
+        const recipients = [
+            "mission.albania@un.int",
+            "mission.geneva@mfa.bg",
+            "mission.geneva@minrel.gob.cl",
+            "mision.ginebra@cancilleria.gov.co",
+            "mission.geneva@mfa.gov.cy",
+            "mission.geneva@mzv.cz",
+            "mission.geneva@mirex.gob.do",
+            "mision.ginebra@cancilleria.gob.ec",
+            "mission.geneva@mfa.ee",
+            "mission.geneve@diplomatie.gouv.fr",
+            "mission.geneva@mfa.is",
+            "mission.geneva@esteri.it",
+            "mission.geneva@mofa.go.jp",
+            "mission.geneva@govmu.org",
+            "mission.geneva@minbuza.nl",
+            "mission.geneva@mfa.gov.mk",
+            "mission.geneva@mofa.go.kr",
+            "mission.geneva@gov.si",
+            "mission.geneva@maec.es",
+            "mission.geneva@eda.admin.ch",
+            "ukmission.geneva@fcdo.gov.uk"
+        ].join(",");
+
+        // SUBJECT
+        const subject =
+            "Emergency Special Session of the Human Rights Council – targeted extension of the Iran Fact-Finding Mission’s Mandate";
+
+        // LETTER TEXT (FULL VERSION)
+        const letter = `21 January 2026
+
+Excellencies,
+
+We write in the context of the Emergency Special Session of the United Nations Human Rights Council on the human rights situation in the Islamic Republic of Iran, convened Friday 23 January 2026, at the request of all your governments.
+
+The Independent International Fact-Finding Mission on the Islamic Republic of Iran (FFM) was established by Human Rights Council resolution S-35/1 (24 November 2022) and its mandate extended by resolutions 55/19 (4 April 2024) and A/HRC/58/21 (3 April 2025), currently in force until April 2026. The Mission is mandated to investigate serious and ongoing human rights violations in Iran and to collect and preserve evidence for future judicial proceedings.
+
+Since 28 December 2025, serious violations have escalated, including the systematic use of lethal force, resulting in at least 2,677 confirmed deaths and over 19,000 arrests nationwide, including minors, alongside widespread torture, enforced disappearances and forced confessions.
+
+Considering these facts, we respectfully call on States to support two targeted and legally necessary adjustments to the existing mandate:
+
+1. Extension of the temporal scope to ensure coverage of violations committed between 28 December and 23 January, without prejudice to earlier violations.
+
+2. Targeted strengthening of the substantive scope, including explicit tasking for the Mission to:
+— investigate unlawful killings and mass arrests;
+— analyse patterns of responsibility, including command responsibility and the role of security forces, notably the Islamic Revolutionary Guard Corps (IRGC);
+— document internet shutdowns as an obstruction to accountability;
+— and reinforce evidence preservation in line with international criminal standards.
+
+We respectfully urge your government to support any initiative aimed at clarifying the temporal scope of the FFM’s mandate and strengthening its operational effectiveness.
+
+Please accept, Excellencies, the assurances of our highest consideration.
+
+Civil society actors`;
+
+        // Inject text into page
+        document.getElementById("letterText").textContent = letter;
+
+        // Build mailto link (NO BODY)
+        const mailto = `mailto:${recipients}?subject=${encodeURIComponent(subject)}`;
+        document.getElementById("mailtoLink").href = mailto;
+
+        // Copy to clipboard
+        function copyText() {
+            navigator.clipboard.writeText(letter).then(() => {
+                alert("Letter text copied to clipboard");
+            });
+        }
+    </script>
+</body>
+
+</html>
