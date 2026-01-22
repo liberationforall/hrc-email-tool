@@ -134,6 +134,12 @@
     </div>
 
     <script>
+        const date = new Date();
+        const day = date.getDate();
+        // get month name
+        const month = date.toLocaleString("en", { month: "long" });
+        const year = date.getFullYear();
+        const formattedDate = `${day} ${month} ${year}`;
         // RECIPIENTS
         const recipients = [
             "mission.geneve@mfa.gov.al",
@@ -160,63 +166,74 @@
 
         // SUBJECT (mailto subject)
         const subject =
-            "Emergency Special Session of the Human Rights Council – targeted extension of the Iran Fact-Finding Mission’s Mandate";
+            "Emergency Special Session of the Human Rights Council – implementation and clarification of the mandate of the Independent International Fact-Finding Mission on the Islamic Republic of Iran";
 
         // ====== WRITE YOUR LETTER ONCE, AS HTML (for display + formatted copy) ======
         const letterHtml = `
-      <p>21 January 2026</p>
+      <p>${formattedDate}</p>
 
-      <p>Excellency,</p>
+      <p>Excellencies,</p>
 
       <p>
         We write in the context of the <strong>Emergency Special Session</strong> of the United Nations
-        <strong>Human Rights Council</strong> on the human rights situation in the Islamic Republic of Iran, convened
-        <strong>Friday 23 January 2026</strong>, at the request of your government and other States.
-      </p>
+        <strong>Human Rights Council</strong> on the human rights situation in the Islamic Republic of Iran,
+        convened on <strong>Friday, 23 January 2026</strong>, at the request of your governments.
+        </p>
 
-      <p>
-        The Independent International <strong>Fact-Finding Mission on the Islamic Republic of Iran (FFM)</strong> was established by
-        Human Rights Council resolution S-35/1 (24 November 2022) and its mandate extended by resolutions 55/19 (4 April 2024)
-        and A/HRC/58/21 (3 April 2025), currently in force until April 2026. The Mission is mandated to investigate serious and
-        ongoing human rights violations in Iran and to collect and preserve evidence for future judicial proceedings.
-      </p>
+        <p>
+        The Independent International <strong>Fact-Finding Mission on the Islamic Republic of Iran (FFM)</strong>
+        was established by Human Rights Council resolution S-35/1 (24 November 2022) and its mandate extended
+        by resolutions 55/19 (4 April 2024) and 58/21 (3 April 2025), currently in force until April 2026.
+        Pursuant to resolution 58/21, the Mission is mandated to monitor and investigate recent and ongoing
+        serious human rights violations, to establish the facts and structural causes, and to collect and
+        preserve evidence for use in independent legal proceedings.
+        </p>
 
-      <p>
-        Since <strong>28 December 2025</strong>, serious violations have escalated, including the systematic use of lethal force, resulting in at least
-        2,677 confirmed deaths and over 19,000 arrests nationwide, including minors, alongside widespread torture, enforced disappearances
-        and forced confessions.
-      </p>
+        <p>
+        Since <strong>late December 2025</strong>, the human rights situation in the Islamic Republic of Iran
+        has further deteriorated, with reports of the use of lethal force, mass arrests, including of children,
+        and allegations of torture, enforced disappearances and forced confessions. These developments raise
+        serious concerns considering the Council’s findings regarding sustained and systematic impunity for
+        gross violations of human rights and the absence of accountability, as recalled in resolution 58/21.
+        </p>
 
-      <p>
-        Considering these facts, we respectfully call on States to support two targeted and legally necessary adjustments to the existing mandate:
-      </p>
+        <p>
+        In this context, we respectfully encourage States to support language in the forthcoming resolution
+        that clarifies the application of the existing mandate to recent and ongoing violations, consistent
+        with operative paragraph 7 of resolution 58/21, and that reinforces the effective implementation of
+        the Mission’s current tasks, without creating new substantive obligations.
+        </p>
 
-      <ol>
+        <ol>
         <li>
-          <strong>Extension of the temporal scope</strong> to ensure coverage of violations committed between <strong>28 December</strong> and <strong>23 January</strong>,
-          without prejudice to earlier violations.
+            <strong>Clarification of the application of the existing mandate</strong> to ensure coverage of
+            recent and ongoing violations, consistent with operative paragraph 7 of resolution 58/21.
         </li>
         <li>
-          <strong>Targeted strengthening of the substantive scope</strong>, including explicit tasking for the Mission to:
-          <ul>
-            <li>investigate unlawful killings, mass arrests;</li>
-            <li>analyse patterns of responsibility, including command responsibility and the role of security forces, notably the Islamic Revolutionary Guard Corps (IRGC);</li>
-            <li>document internet shutdowns as an obstruction to accountability;</li>
-            <li>and reinforce evidence preservation in line with international criminal standards.</li>
-          </ul>
+            <strong>Reinforcement of the effective implementation of the Mission’s current tasks</strong>,
+            including ensuring that the Fact-Finding Mission can:
+            <ul>
+            <li>thoroughly and independently investigate allegations of unlawful killings, mass arrests and other serious violations;</li>
+            <li>analyse patterns of responsibility and the structural causes of violations, including discrimination on grounds of gender, ethnicity, religion or belief and political views;</li>
+            <li>document measures that impede the enjoyment of the rights to freedom of opinion and expression, online and offline, and the rights to freedom of peaceful assembly and of association;</li>
+            <li>and continue to collect, consolidate and preserve evidence in accordance with international standards, so that it remains accessible for future accountability processes.</li>
+            </ul>
         </li>
-      </ol>
+        </ol>
 
-      <p>
-        We respectfully urge your government to support any initiative aimed at clarifying the temporal scope of the FFM’s mandate and strengthening its operational effectiveness.
-      </p>
+        <p>
+        We respectfully urge your government to support initiatives aimed at ensuring legal clarity regarding
+        the scope of the Fact-Finding Mission’s mandate and strengthening its operational effectiveness,
+        fully in line with resolution 58/21.
+        </p>
 
-      <p>Please accept Excellency, the assurances of our highest consideration.</p>
+        <p>Please accept Excellencies, the assurances of our highest consideration.</p>
 
-      <p>
+        <p>
         Civil society actors<br>
         <strong>Permanent Missions of Albania, Bulgaria, Chile, Colombia, Cyprus, Czechia, the Dominican Republic, Ecuador, Estonia, France, Iceland, Italy, Japan, Mauritius, the Netherlands, North Macedonia, the Republic of Korea, Slovenia, Spain, Switzerland, and the United Kingdom of Great Britain and Northern Ireland to the United Nations in Geneva</strong>
-      </p>
+        </p>
+
     `;
 
         // Plain-text fallback (for email clients that don’t accept HTML paste)
